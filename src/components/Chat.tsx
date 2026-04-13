@@ -58,20 +58,26 @@ export const Chat: React.FC<ChatProps> = ({ roomId, currentUser }) => {
   };
 
   return (
-    <div className="flex flex-col h-full glass-card overflow-hidden">
-      <div className="p-4 border-b border-[var(--glass-border)] flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <h3 className="font-display font-semibold text-[var(--text-primary)]">الدردشة المباشرة</h3>
-          <span className="text-xs">🇮🇶</span>
+    <div className="flex flex-col h-full glass-card overflow-hidden border-none shadow-none rounded-none md:rounded-[2.5rem]">
+      {/* Chat Header */}
+      <div className="p-8 border-b border-[var(--glass-border)] flex items-center justify-between bg-brand-500/5">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 bg-brand-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-brand-500/20">
+            <Send size={24} />
+          </div>
+          <div>
+            <h3 className="text-xl font-black text-[var(--text-primary)]">الدردشة المباشرة</h3>
+            <p className="text-sm text-[var(--text-secondary)] font-bold">تفاعل مع أصدقائك</p>
+          </div>
         </div>
-        <div className="flex gap-2 flex-row-reverse">
+        <div className="flex gap-3 flex-row-reverse">
           {['🔥', '❤️', '😂', '😮'].map(emoji => (
             <button
               key={emoji}
               onClick={() => sendReaction(emoji)}
-              className="hover:scale-125 transition-transform cursor-pointer"
+              className="w-10 h-10 flex items-center justify-center bg-[var(--input-bg)] hover:bg-[var(--glass-border)] rounded-xl transition-all hover:scale-125 active:scale-90 border border-[var(--glass-border)]"
             >
-              {emoji}
+              <span className="text-xl">{emoji}</span>
             </button>
           ))}
         </div>
@@ -79,64 +85,74 @@ export const Chat: React.FC<ChatProps> = ({ roomId, currentUser }) => {
 
       <div 
         ref={scrollRef}
-        className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-hide"
+        className="flex-1 overflow-y-auto p-8 space-y-6 custom-scrollbar"
       >
         <AnimatePresence initial={false}>
           {messages.map((msg) => (
             <motion.div
               key={msg.id || msg.timestamp}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: msg.userId === currentUser.id ? -20 : 20 }}
+              animate={{ opacity: 1, x: 0 }}
               className={`flex flex-col ${msg.userId === currentUser.id ? 'items-start' : 'items-end'}`}
             >
-              <span className="text-[10px] text-[var(--text-secondary)] mb-1 px-1">{msg.userName}</span>
-              <div className={`px-4 py-2 rounded-2xl max-w-[80%] text-sm ${
-                msg.userId === currentUser.id 
-                  ? 'bg-brand-600 text-white rounded-tl-none' 
-                  : 'bg-[var(--input-bg)] text-[var(--text-primary)] rounded-tr-none border border-[var(--glass-border)]'
-              }`}>
+              <div className="flex items-center gap-3 mb-2">
+                {msg.userId !== currentUser.id && (
+                  <span className="text-xs font-black text-[var(--text-secondary)] uppercase tracking-wider">{msg.userName}</span>
+                )}
+              </div>
+              <div
+                className={`max-w-[85%] p-5 rounded-[1.5rem] text-base font-medium shadow-sm ${
+                  msg.userId === currentUser.id
+                    ? 'bg-brand-500 text-white rounded-tl-none'
+                    : 'bg-[var(--input-bg)] text-[var(--text-primary)] border border-[var(--glass-border)] rounded-tr-none'
+                }`}
+              >
                 {msg.text}
               </div>
+              <span className="text-[10px] text-[var(--text-secondary)] mt-2 font-bold opacity-50">
+                {new Date(msg.timestamp).toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' })}
+              </span>
             </motion.div>
           ))}
           {typingUsers.length > 0 && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="flex flex-col items-end"
+              className="flex items-center gap-3 text-[var(--text-secondary)] text-xs font-bold bg-[var(--input-bg)] px-4 py-2 rounded-full border border-[var(--glass-border)] w-fit"
             >
-              <div className="bg-[var(--input-bg)] text-[var(--text-secondary)] px-4 py-2 rounded-2xl rounded-tr-none text-[10px] italic flex items-center gap-2 border border-[var(--glass-border)]">
-                <span className="flex gap-1">
-                  <span className="w-1 h-1 bg-[var(--text-secondary)] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <span className="w-1 h-1 bg-[var(--text-secondary)] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <span className="w-1 h-1 bg-[var(--text-secondary)] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                </span>
-                {typingUsers.length === 1 ? `${typingUsers[0].name} يكتب...` : 'عدة أشخاص يكتبون...'}
+              <div className="flex gap-1">
+                <span className="w-1.5 h-1.5 bg-brand-500 rounded-full animate-bounce" />
+                <span className="w-1.5 h-1.5 bg-brand-500 rounded-full animate-bounce [animation-delay:0.2s]" />
+                <span className="w-1.5 h-1.5 bg-brand-500 rounded-full animate-bounce [animation-delay:0.4s]" />
               </div>
+              <span>{typingUsers.length === 1 ? `${typingUsers[0].name} يكتب...` : 'عدة أشخاص يكتبون...'}</span>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      <form onSubmit={handleSend} className="p-4 bg-[var(--input-bg)] border-t border-[var(--glass-border)]">
-        <div className="relative">
+      <div className="p-8 border-t border-[var(--glass-border)] bg-[var(--bg-secondary)]/50">
+        <form
+          onSubmit={handleSend}
+          className="relative flex items-center gap-4"
+        >
           <input
             type="text"
             value={inputText}
             onChange={(e) => handleTyping(e.target.value)}
             onBlur={() => UserService.setTypingStatus(roomId, currentUser.id, false)}
-            placeholder="اكتب شيئاً..."
-            className="w-full bg-[var(--bg-primary)] border border-[var(--glass-border)] rounded-full py-3 pr-5 pl-12 text-sm focus:ring-2 focus:ring-brand-500 transition-all outline-none text-right text-[var(--text-primary)]"
-            dir="rtl"
+            placeholder="اكتب رسالتك هنا..."
+            className="flex-1 glass-input h-16 text-base pr-6 pl-16"
           />
           <button
             type="submit"
-            className="absolute left-2 top-1/2 -translate-y-1/2 p-2 text-brand-400 hover:text-brand-300 transition-colors"
+            disabled={!inputText.trim()}
+            className="absolute left-3 p-3 bg-brand-500 text-white rounded-xl hover:bg-brand-400 transition-all disabled:opacity-50 disabled:hover:bg-brand-500 shadow-lg shadow-brand-500/20"
           >
-            <Send size={18} className="rotate-180" />
+            <Send size={24} />
           </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };

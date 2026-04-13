@@ -226,7 +226,7 @@ export default function App() {
               <span className="w-2 h-2 bg-brand-500 rounded-full animate-ping" />
               مستقبل المشاهدة الجماعية في العراق 🇮🇶
             </motion.div>
-            <h1 className="text-8xl md:text-[10rem] font-display font-black tracking-tighter bg-gradient-to-b from-[var(--text-primary)] via-[var(--text-primary)] to-[var(--text-primary)]/20 bg-clip-text text-transparent leading-[0.8]">
+            <h1 className="text-8xl md:text-[12rem] font-display font-black tracking-tighter bg-gradient-to-b from-[var(--text-primary)] via-[var(--text-primary)] to-[var(--text-primary)]/20 bg-clip-text text-transparent leading-[0.75]">
               سينك ستريم
             </h1>
             <p className="text-[var(--text-secondary)] text-xl md:text-3xl max-w-2xl mx-auto leading-relaxed font-medium">
@@ -237,16 +237,16 @@ export default function App() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <button
               onClick={signInWithGoogle}
-              className="w-full sm:w-auto flex items-center justify-center gap-4 px-12 py-6 bg-white text-black font-black rounded-[2rem] hover:bg-zinc-200 transition-all transform hover:scale-105 active:scale-95 shadow-2xl shadow-black/10 text-xl"
+              className="w-full sm:w-auto flex items-center justify-center gap-4 px-12 py-7 bg-white text-black font-black rounded-[2.5rem] hover:bg-zinc-200 transition-all transform hover:scale-105 active:scale-95 shadow-2xl shadow-black/20 text-2xl"
             >
-              <LogIn size={26} />
+              <LogIn size={28} />
               تسجيل الدخول بجوجل
             </button>
             <button
               onClick={loginAsGuest}
-              className="w-full sm:w-auto flex items-center justify-center gap-4 px-12 py-6 bg-[var(--input-bg)] text-[var(--text-primary)] font-black rounded-[2rem] border border-[var(--glass-border)] hover:bg-[var(--glass-border)] transition-all transform hover:scale-105 active:scale-95 text-xl"
+              className="w-full sm:w-auto flex items-center justify-center gap-4 px-12 py-7 bg-[var(--input-bg)] text-[var(--text-primary)] font-black rounded-[2.5rem] border border-[var(--glass-border)] hover:bg-[var(--glass-border)] transition-all transform hover:scale-105 active:scale-95 text-2xl"
             >
-              <UserCircle size={26} />
+              <UserCircle size={28} />
               الدخول كزائر
             </button>
           </div>
@@ -300,21 +300,21 @@ export default function App() {
           <motion.div 
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
-            className="glass-card p-16 text-center space-y-10 relative overflow-hidden flex flex-col justify-center group"
+            className="glass-card p-20 text-center space-y-12 relative overflow-hidden flex flex-col justify-center group"
           >
-            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-brand-500 to-purple-500" />
-            <div className="w-32 h-32 bg-brand-500/10 rounded-[3rem] flex items-center justify-center mx-auto rotate-12 group-hover:rotate-0 transition-all duration-700 shadow-inner">
-              <Play className="text-brand-400 fill-brand-400" size={64} />
+            <div className="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-brand-500 via-purple-500 to-brand-500" />
+            <div className="w-40 h-40 bg-brand-500/10 rounded-[3.5rem] flex items-center justify-center mx-auto rotate-12 group-hover:rotate-0 transition-all duration-700 shadow-inner">
+              <Play className="text-brand-400 fill-brand-400" size={80} />
             </div>
-            <div className="space-y-4">
-              <h2 className="text-5xl font-display font-black">ابدأ المتعة الآن</h2>
-              <p className="text-[var(--text-secondary)] text-lg leading-relaxed">أنشئ غرفتك الخاصة وشارك اللحظات مع من تحب في ثوانٍ معدودة.</p>
+            <div className="space-y-6">
+              <h2 className="text-6xl font-display font-black tracking-tight">ابدأ المتعة الآن</h2>
+              <p className="text-[var(--text-secondary)] text-xl leading-relaxed max-w-sm mx-auto">أنشئ غرفتك الخاصة وشارك اللحظات مع من تحب في ثوانٍ معدودة.</p>
             </div>
             <button
               onClick={createRoom}
-              className="btn-primary text-xl py-6 shadow-brand-500/40"
+              className="btn-primary text-2xl py-8 shadow-brand-500/40 rounded-[2.5rem]"
             >
-              <Plus size={28} />
+              <Plus size={32} />
               إنشاء غرفة جديدة
             </button>
           </motion.div>
@@ -323,17 +323,17 @@ export default function App() {
           <motion.div 
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
-            className="glass-card p-12 space-y-8 flex flex-col"
+            className="glass-card p-16 space-y-10 flex flex-col"
           >
             <div className="flex items-center justify-between">
-              <h2 className="text-3xl font-display font-black">الغرف النشطة</h2>
-              <div className="px-4 py-2 bg-green-500/10 text-green-400 rounded-full text-xs font-black uppercase tracking-widest flex items-center gap-3 border border-green-500/20">
-                <span className="w-2.5 h-2.5 bg-green-500 rounded-full animate-ping" />
+              <h2 className="text-4xl font-display font-black">الغرف النشطة</h2>
+              <div className="px-6 py-2.5 bg-green-500/10 text-green-400 rounded-full text-sm font-black uppercase tracking-widest flex items-center gap-3 border border-green-500/20">
+                <span className="w-3 h-3 bg-green-500 rounded-full animate-ping" />
                 مباشر
               </div>
             </div>
 
-            <div className="flex-1 space-y-5 overflow-y-auto max-h-[500px] pr-4 custom-scrollbar">
+            <div className="flex-1 space-y-6 overflow-y-auto max-h-[600px] pr-4 custom-scrollbar">
               {publicRooms.length > 0 ? (
                 publicRooms.map((room) => (
                   <button
@@ -342,26 +342,26 @@ export default function App() {
                       setRoomId(room.id);
                       window.history.pushState({}, '', `?room=${room.id}`);
                     }}
-                    className="w-full p-6 bg-[var(--input-bg)] hover:bg-[var(--glass-border)] border border-[var(--glass-border)] rounded-[2rem] transition-all text-right group flex items-center justify-between hover:scale-[1.02] active:scale-[0.98]"
+                    className="w-full p-8 bg-[var(--input-bg)] hover:bg-[var(--glass-border)] border border-[var(--glass-border)] rounded-[2.5rem] transition-all text-right group flex items-center justify-between hover:scale-[1.02] active:scale-[0.98] shadow-sm hover:shadow-xl"
                   >
-                    <div className="space-y-2">
-                      <div className="text-[var(--text-primary)] text-xl font-black group-hover:text-brand-400 transition-colors">غرفة: {room.id.slice(0, 8)}</div>
-                      <div className="text-sm text-[var(--text-secondary)] flex items-center gap-3 font-medium">
-                        <Users size={16} className="text-brand-500" />
+                    <div className="space-y-3">
+                      <div className="text-[var(--text-primary)] text-2xl font-black group-hover:text-brand-400 transition-colors">غرفة: {room.id.slice(0, 8)}</div>
+                      <div className="text-base text-[var(--text-secondary)] flex items-center gap-3 font-medium">
+                        <Users size={20} className="text-brand-500" />
                         نشطة منذ {new Date(room.state.lastUpdated).toLocaleTimeString('ar-SA')}
                       </div>
                     </div>
-                    <div className="w-14 h-14 rounded-2xl bg-brand-500/10 flex items-center justify-center text-brand-400 group-hover:bg-brand-500 group-hover:text-white transition-all shadow-lg">
-                      <LogIn size={28} />
+                    <div className="w-16 h-16 rounded-[1.5rem] bg-brand-500/10 flex items-center justify-center text-brand-400 group-hover:bg-brand-500 group-hover:text-white transition-all shadow-lg">
+                      <LogIn size={32} />
                     </div>
                   </button>
                 ))
               ) : (
-                <div className="h-full flex flex-col items-center justify-center text-[var(--text-secondary)] space-y-6 py-20">
-                  <div className="w-24 h-24 bg-[var(--input-bg)] rounded-full flex items-center justify-center">
-                    <Search size={48} className="opacity-20" />
+                <div className="h-full flex flex-col items-center justify-center text-[var(--text-secondary)] space-y-8 py-24">
+                  <div className="w-32 h-32 bg-[var(--input-bg)] rounded-full flex items-center justify-center">
+                    <Search size={64} className="opacity-20" />
                   </div>
-                  <p className="text-xl font-medium">لا توجد غرف نشطة حالياً</p>
+                  <p className="text-2xl font-medium">لا توجد غرف نشطة حالياً</p>
                 </div>
               )}
             </div>
@@ -399,10 +399,10 @@ export default function App() {
         <Toaster position="top-center" theme={isDarkMode ? 'dark' : 'light'} />
         
         {/* Header */}
-        <header className="h-24 glass border-b border-[var(--glass-border)] px-10 flex items-center justify-between z-50">
-          <div className="flex items-center gap-8">
-            <div className="flex items-center gap-3 group cursor-pointer">
-              <div className="w-12 h-12 rounded-2xl overflow-hidden shadow-2xl shadow-brand-500/40 group-hover:scale-110 transition-transform border-2 border-brand-500/20 group-hover:border-brand-500/50">
+        <header className="h-28 glass border-b border-[var(--glass-border)] px-12 flex items-center justify-between z-50">
+          <div className="flex items-center gap-10">
+            <div className="flex items-center gap-4 group cursor-pointer">
+              <div className="w-14 h-14 rounded-[1.5rem] overflow-hidden shadow-2xl shadow-brand-500/40 group-hover:scale-110 transition-transform border-2 border-brand-500/20 group-hover:border-brand-500/50">
                 <img 
                   src="https://storage.googleapis.com/applet-assets/fbc229f5-8e03-4d21-a785-375f1238a529/input_file_0.png" 
                   alt="سينك ستريم العراق" 
@@ -410,37 +410,37 @@ export default function App() {
                   referrerPolicy="no-referrer"
                 />
               </div>
-              <h1 className="text-3xl font-display font-black tracking-tighter text-[var(--text-primary)]">سينك ستريم العراق 🇮🇶</h1>
+              <h1 className="text-4xl font-display font-black tracking-tighter text-[var(--text-primary)]">سينك ستريم العراق 🇮🇶</h1>
             </div>
-            <div className="h-8 w-[1px] bg-[var(--glass-border)] hidden md:block" />
-            <div className="hidden md:flex items-center gap-4 text-[var(--text-secondary)] bg-[var(--input-bg)] px-6 py-2.5 rounded-2xl border border-[var(--glass-border)]">
-              <Users size={18} className="text-brand-400" />
-              <span className="text-sm font-bold">{participants.length} يشاهدون الآن</span>
+            <div className="h-10 w-[1px] bg-[var(--glass-border)] hidden md:block" />
+            <div className="hidden md:flex items-center gap-5 text-[var(--text-secondary)] bg-[var(--input-bg)] px-8 py-3 rounded-[1.5rem] border border-[var(--glass-border)]">
+              <Users size={22} className="text-brand-400" />
+              <span className="text-base font-bold">{participants.length} يشاهدون الآن</span>
             </div>
           </div>
 
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-6">
             <button
               onClick={copyLink}
-              className="btn-secondary px-6 py-3 text-sm"
+              className="btn-secondary px-8 py-4 text-base"
             >
-              <Share2 size={20} />
+              <Share2 size={24} />
               <span className="hidden sm:inline">مشاركة</span>
             </button>
 
             <button
               onClick={leaveRoom}
-              className="flex items-center gap-3 px-6 py-3 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 rounded-2xl text-red-400 transition-all text-sm font-black"
+              className="flex items-center gap-4 px-8 py-4 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 rounded-[1.5rem] text-red-400 transition-all text-base font-black"
             >
-              <X size={20} />
+              <X size={24} />
               <span className="hidden sm:inline">إغلاق الغرفة</span>
             </button>
             
             <button
               onClick={() => setIsDarkMode(!isDarkMode)}
-              className="p-3.5 bg-[var(--input-bg)] hover:bg-[var(--glass-border)] border border-[var(--glass-border)] rounded-2xl text-[var(--text-secondary)] transition-all hover:text-[var(--text-primary)]"
+              className="p-4 bg-[var(--input-bg)] hover:bg-[var(--glass-border)] border border-[var(--glass-border)] rounded-[1.5rem] text-[var(--text-secondary)] transition-all hover:text-[var(--text-primary)]"
             >
-              {isDarkMode ? <Sun size={22} /> : <Moon size={22} />}
+              {isDarkMode ? <Sun size={26} /> : <Moon size={26} />}
             </button>
 
             {roomState?.hostId === user.uid && (
@@ -491,7 +491,56 @@ export default function App() {
             </AnimatePresence>
           </div>
 
-          <div className="flex-1 p-10 flex flex-col gap-10 overflow-y-auto custom-scrollbar">
+          <div className="flex-1 p-10 flex flex-col gap-10 overflow-y-auto custom-scrollbar relative">
+            {/* Active Poll Overlay */}
+            <AnimatePresence>
+              {roomState?.activePoll && (
+                <motion.div
+                  initial={{ opacity: 0, x: 40, scale: 0.9 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  exit={{ opacity: 0, x: 40, scale: 0.9 }}
+                  className="absolute top-10 left-10 w-96 glass-card p-10 space-y-8 border-brand-500/30 shadow-2xl shadow-brand-500/20 z-50"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-brand-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-brand-500/20">
+                        <MessageSquare size={20} />
+                      </div>
+                      <h4 className="text-2xl font-display font-black text-[var(--text-primary)]">استطلاع رأي</h4>
+                    </div>
+                    <div className="w-3 h-3 bg-brand-500 rounded-full animate-pulse" />
+                  </div>
+                  <p className="text-lg font-bold text-[var(--text-secondary)] leading-relaxed">{roomState.activePoll.question}</p>
+                  <div className="space-y-4">
+                    {roomState.activePoll.options.map((opt, idx) => {
+                      const totalVotes = roomState.activePoll!.options.reduce((acc, curr) => acc + curr.votes.length, 0);
+                      const percentage = totalVotes > 0 ? Math.round((opt.votes.length / totalVotes) * 100) : 0;
+                      const hasVoted = opt.votes.includes(user.uid);
+                      
+                      return (
+                        <button
+                          key={idx}
+                          onClick={() => votePoll(idx)}
+                          className={`w-full p-6 rounded-[1.5rem] border transition-all text-right relative overflow-hidden group ${
+                            hasVoted ? 'border-brand-500 bg-brand-500/10' : 'border-[var(--glass-border)] bg-[var(--input-bg)] hover:bg-[var(--glass-border)]'
+                          }`}
+                        >
+                          <div 
+                            className="absolute inset-0 bg-brand-500/10 transition-all duration-1000" 
+                            style={{ width: `${percentage}%`, right: 0 }} 
+                          />
+                          <div className="relative flex items-center justify-between">
+                            <span className="font-black text-lg">{percentage}%</span>
+                            <span className="font-bold text-lg">{opt.text}</span>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <div className="video-shadow rounded-[2.5rem] overflow-hidden border border-[var(--glass-border)]">
               <VideoPlayer 
                 roomId={roomId} 
@@ -574,20 +623,20 @@ export default function App() {
                 initial={{ opacity: 0, scale: 0.9, y: 40 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 40 }}
-                className="glass-card p-12 max-w-2xl w-full relative z-10 space-y-10"
+                className="glass-card p-16 max-w-3xl w-full relative z-10 space-y-12"
               >
                 <div className="flex items-center justify-between">
-                  <h2 className="text-4xl font-display font-black text-[var(--text-primary)]">إعدادات الغرفة</h2>
-                  <button onClick={() => setIsSettingsOpen(false)} className="p-3 hover:bg-[var(--glass-border)] rounded-2xl transition-colors">
-                    <X size={28} />
+                  <h2 className="text-5xl font-display font-black text-[var(--text-primary)]">إعدادات الغرفة</h2>
+                  <button onClick={() => setIsSettingsOpen(false)} className="p-4 hover:bg-[var(--glass-border)] rounded-2xl transition-colors">
+                    <X size={32} />
                   </button>
                 </div>
                 
-                <div className="space-y-8">
+                <div className="space-y-10">
                   {/* Theme Selection */}
-                  <div className="space-y-4">
-                    <label className="text-sm font-black text-[var(--text-secondary)] uppercase tracking-widest">تخصيص المود (Theme)</label>
-                    <div className="grid grid-cols-3 gap-4">
+                  <div className="space-y-6">
+                    <label className="text-xs font-black text-[var(--text-secondary)] uppercase tracking-[0.2em]">تخصيص المود (Theme)</label>
+                    <div className="grid grid-cols-3 gap-6">
                       {[
                         { id: 'minimal', name: 'كلاسيك', icon: '🎬' },
                         { id: 'cinema', name: 'سينما', icon: '🌑' },
@@ -596,43 +645,43 @@ export default function App() {
                         <button
                           key={t.id}
                           onClick={() => changeTheme(t.id as any)}
-                          className={`p-6 rounded-3xl border-2 transition-all flex flex-col items-center gap-3 ${
+                          className={`p-8 rounded-[2rem] border-2 transition-all flex flex-col items-center gap-4 ${
                             theme === t.id ? 'border-brand-500 bg-brand-500/10' : 'border-[var(--glass-border)] bg-[var(--input-bg)] hover:bg-[var(--glass-border)]'
                           }`}
                         >
-                          <span className="text-3xl">{t.icon}</span>
-                          <span className="font-bold text-[var(--text-primary)]">{t.name}</span>
+                          <span className="text-4xl">{t.icon}</span>
+                          <span className="font-black text-[var(--text-primary)] text-lg">{t.name}</span>
                         </button>
                       ))}
                     </div>
                   </div>
 
-                  <div className="space-y-3">
-                    <label className="text-sm text-[var(--text-secondary)] font-black uppercase tracking-widest">رابط فيديو يوتيوب الجديد</label>
+                  <div className="space-y-4">
+                    <label className="text-xs text-[var(--text-secondary)] font-black uppercase tracking-[0.2em]">رابط فيديو يوتيوب الجديد</label>
                     <div className="relative">
                       <input
                         type="text"
                         value={newVideoUrl}
                         onChange={(e) => setNewVideoUrl(e.target.value)}
                         placeholder="https://www.youtube.com/watch?v=..."
-                        className="glass-input w-full pr-14 text-[var(--text-primary)]"
+                        className="glass-input w-full pr-16 text-[var(--text-primary)] text-lg h-20"
                       />
-                      <Search className="absolute right-5 top-1/2 -translate-y-1/2 text-[var(--text-secondary)]" size={24} />
+                      <Search className="absolute right-6 top-1/2 -translate-y-1/2 text-[var(--text-secondary)]" size={28} />
                     </div>
                   </div>
 
                   {/* Create Poll */}
-                  <div className="space-y-4">
-                    <label className="text-sm font-black text-[var(--text-secondary)] uppercase tracking-widest">إنشاء استطلاع رأي</label>
-                    <div className="space-y-4">
+                  <div className="space-y-6">
+                    <label className="text-xs font-black text-[var(--text-secondary)] uppercase tracking-[0.2em]">إنشاء استطلاع رأي</label>
+                    <div className="space-y-5">
                       <input
                         type="text"
                         value={pollQuestion}
                         onChange={(e) => setPollQuestion(e.target.value)}
                         placeholder="ما هو سؤالك؟"
-                        className="w-full glass-input text-[var(--text-primary)]"
+                        className="w-full glass-input text-[var(--text-primary)] h-20 text-lg"
                       />
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-2 gap-6">
                         {pollOptions.map((opt, idx) => (
                           <input
                             key={idx}
@@ -644,17 +693,17 @@ export default function App() {
                               setPollOptions(newOpts);
                             }}
                             placeholder={`خيار ${idx + 1}`}
-                            className="glass-input text-[var(--text-primary)]"
+                            className="glass-input text-[var(--text-primary)] h-16"
                           />
                         ))}
                       </div>
-                      <button onClick={createPoll} className="w-full btn-secondary py-5">بدء الاستطلاع</button>
+                      <button onClick={createPoll} className="w-full btn-secondary py-6 text-xl">بدء الاستطلاع</button>
                     </div>
                   </div>
 
                   <button
                     onClick={changeVideo}
-                    className="btn-primary w-full text-xl py-5"
+                    className="btn-primary w-full text-2xl py-7 rounded-[2rem]"
                   >
                     تحديث الفيديو للجميع
                   </button>
