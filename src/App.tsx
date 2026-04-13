@@ -9,8 +9,9 @@ import { Chat } from './components/Chat';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { useUIStore } from './store/uiStore';
 import { motion, AnimatePresence } from 'motion/react';
-import { LogIn, Users, MessageSquare, Share2, Plus, UserCircle, Play, Settings, X, Search, Sun, Moon, Instagram } from 'lucide-react';
+import { LogIn, Users, MessageSquare, Share2, Plus, UserCircle, Play, Settings, X, Search, Sun, Moon, Instagram, Loader2 } from 'lucide-react';
 import { Toaster, toast } from 'sonner';
+import { YouTubeService, YouTubeSearchResult } from './lib/youtubeService';
 
 export default function App() {
   const [user, setUser] = useState<FirebaseUser | null>(null);
@@ -27,7 +28,22 @@ export default function App() {
   const [pollQuestion, setPollQuestion] = useState('');
   const [pollOptions, setPollOptions] = useState(['', '']);
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<YouTubeSearchResult[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
   
+  useEffect(() => {
+    if (isSettingsOpen && searchResults.length === 0 && roomState?.hostId === user?.uid) {
+      const loadTrending = async () => {
+        setIsSearching(true);
+        const trending = await YouTubeService.getTrendingVideos();
+        setSearchResults(trending);
+        setIsSearching(false);
+      };
+      loadTrending();
+    }
+  }, [isSettingsOpen, roomState?.hostId, user?.uid]);
+
   const { isChatOpen, toggleChat } = useUIStore();
 
   useEffect(() => {
@@ -167,6 +183,32 @@ export default function App() {
     await RoomService.updateRoomState(roomId, { videoId: vId, currentTime: 0, isPlaying: true });
     setIsSettingsOpen(false);
     setNewVideoUrl('');
+    toast.success('تم تغيير الفيديو!');
+  };
+
+  const handleSearch = async () => {
+    if (!searchQuery.trim()) return;
+    setIsSearching(true);
+    try {
+      const results = await YouTubeService.searchVideos(searchQuery);
+      setSearchResults(results);
+      if (results.length === 0) {
+        toast.error('لم يتم العثور على نتائج');
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('حدث خطأ أثناء البحث');
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  const selectVideo = async (videoId: string) => {
+    if (!roomId) return;
+    await RoomService.updateRoomState(roomId, { videoId, currentTime: 0, isPlaying: true });
+    setIsSettingsOpen(false);
+    setSearchResults([]);
+    setSearchQuery('');
     toast.success('تم تغيير الفيديو!');
   };
 
@@ -656,8 +698,61 @@ export default function App() {
                     </div>
                   </div>
 
+                  {/* YouTube Search */}
+                  <div className="space-y-6">
+                    <label className="text-xs text-[var(--text-secondary)] font-black uppercase tracking-[0.2em]">
+                      {searchQuery ? 'نتائج البحث' : 'فيديوهات مقترحة'}
+                    </label>
+                    <div className="flex gap-4">
+                      <div className="relative flex-1">
+                        <input
+                          type="text"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                          placeholder="ابحث عن مقطع، أغنية، أو فيلم..."
+                          className="glass-input w-full pr-16 text-[var(--text-primary)] text-lg h-20"
+                        />
+                        <Search className="absolute right-6 top-1/2 -translate-y-1/2 text-[var(--text-secondary)]" size={28} />
+                      </div>
+                      <button 
+                        onClick={handleSearch}
+                        disabled={isSearching}
+                        className="btn-primary px-10 h-20 rounded-2xl flex items-center justify-center min-w-[120px]"
+                      >
+                        {isSearching ? <Loader2 className="animate-spin" size={28} /> : 'بحث'}
+                      </button>
+                    </div>
+
+                    {/* Search Results */}
+                    <AnimatePresence>
+                      {searchResults.length > 0 && (
+                        <motion.div 
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 20 }}
+                          className="grid grid-cols-1 gap-4 max-h-[400px] overflow-y-auto custom-scrollbar p-2"
+                        >
+                          {searchResults.map((result) => (
+                            <button
+                              key={result.id}
+                              onClick={() => selectVideo(result.id)}
+                              className="flex items-center gap-6 p-4 bg-[var(--input-bg)] rounded-2xl border border-[var(--glass-border)] hover:border-brand-500 transition-all group text-right"
+                            >
+                              <img src={result.thumbnail} alt={result.title} className="w-32 aspect-video object-cover rounded-xl shadow-lg" />
+                              <div className="flex-1 space-y-2">
+                                <h4 className="text-lg font-black text-[var(--text-primary)] line-clamp-2">{result.title}</h4>
+                                <p className="text-sm text-[var(--text-secondary)] font-bold">{result.channelTitle}</p>
+                              </div>
+                            </button>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
                   <div className="space-y-4">
-                    <label className="text-xs text-[var(--text-secondary)] font-black uppercase tracking-[0.2em]">رابط فيديو يوتيوب الجديد</label>
+                    <label className="text-xs text-[var(--text-secondary)] font-black uppercase tracking-[0.2em]">أو أدخل رابط الفيديو يدوياً</label>
                     <div className="relative">
                       <input
                         type="text"
