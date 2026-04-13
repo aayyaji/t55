@@ -27,50 +27,56 @@
     --glass-border: rgba(0, 0, 0, 0.05);
     --card-bg: rgba(255, 255, 255, 0.4);
     --input-bg: rgba(0, 0, 0, 0.03);
+    --accent-glow: rgba(14, 165, 233, 0.1);
   }
 
   .dark {
-    --bg-primary: #050505;
-    --bg-secondary: #0a0a0f;
+    --bg-primary: #020203;
+    --bg-secondary: #050508;
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
-    --glass-bg: rgba(5, 5, 5, 0.6);
-    --glass-border: rgba(255, 255, 255, 0.05);
-    --card-bg: rgba(15, 15, 20, 0.4);
-    --input-bg: rgba(255, 255, 255, 0.05);
+    --glass-bg: rgba(5, 5, 8, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --card-bg: rgba(10, 10, 15, 0.5);
+    --input-bg: rgba(255, 255, 255, 0.04);
+    --accent-glow: rgba(14, 165, 233, 0.15);
   }
 
   body {
-    @apply bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans antialiased transition-colors duration-500;
+    @apply bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans antialiased transition-colors duration-500 overflow-x-hidden;
+    background-image: 
+      radial-gradient(circle at 50% -20%, var(--accent-glow) 0%, transparent 50%),
+      radial-gradient(circle at 0% 100%, var(--accent-glow) 0%, transparent 40%);
+    background-attachment: fixed;
   }
 }
 
 .glass {
-  @apply bg-[var(--glass-bg)] backdrop-blur-2xl border border-[var(--glass-border)];
+  @apply bg-[var(--glass-bg)] backdrop-blur-3xl border border-[var(--glass-border)];
 }
 
 .glass-card {
-  @apply bg-[var(--card-bg)] backdrop-blur-xl border border-[var(--glass-border)] rounded-[2.5rem] shadow-2xl;
+  @apply bg-[var(--card-bg)] backdrop-blur-2xl border border-[var(--glass-border)] rounded-[2rem] md:rounded-[3rem] shadow-2xl;
 }
 
 .glass-input {
-  @apply bg-[var(--input-bg)] border border-[var(--glass-border)] rounded-2xl px-6 py-4 outline-none focus:border-brand-500/50 focus:bg-[var(--input-bg)] transition-all duration-300;
+  @apply bg-[var(--input-bg)] border border-[var(--glass-border)] rounded-2xl px-6 py-4 outline-none focus:border-brand-500/50 focus:bg-[var(--input-bg)] transition-all duration-300 placeholder:text-[var(--text-secondary)]/50;
 }
 
 .video-shadow {
-  box-shadow: 0 0 120px -30px rgba(14, 165, 233, 0.15);
+  box-shadow: 0 0 100px -20px var(--accent-glow);
 }
 
 .btn-primary {
-  @apply bg-brand-500 hover:bg-brand-400 text-white font-bold rounded-2xl px-8 py-4 transition-all duration-300 shadow-lg shadow-brand-500/20 active:scale-95 flex items-center justify-center gap-3;
+  @apply bg-brand-500 hover:bg-brand-400 text-white font-bold rounded-2xl md:rounded-3xl px-8 py-4 transition-all duration-300 shadow-lg shadow-brand-500/20 active:scale-95 flex items-center justify-center gap-3 disabled:opacity-50 disabled:pointer-events-none;
 }
 
 .btn-secondary {
-  @apply bg-[var(--input-bg)] hover:bg-[var(--glass-border)] border border-[var(--glass-border)] text-[var(--text-primary)] font-bold rounded-2xl px-8 py-4 transition-all duration-300 active:scale-95 flex items-center justify-center gap-3;
+  @apply bg-[var(--input-bg)] hover:bg-[var(--glass-border)] border border-[var(--glass-border)] text-[var(--text-primary)] font-bold rounded-2xl md:rounded-3xl px-8 py-4 transition-all duration-300 active:scale-95 flex items-center justify-center gap-3;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -83,7 +89,7 @@
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
+  50% { transform: translateY(-10px); }
 }
 
 .animate-float {
@@ -92,6 +98,14 @@
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+.text-glow {
+  text-shadow: 0 0 20px var(--accent-glow);
+}
+
+.mask-fade {
+  mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
 }
 
 

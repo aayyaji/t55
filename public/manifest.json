@@ -1,0 +1,17 @@
+{
+  "name": "سينك ستريم العراق",
+  "short_name": "سينك ستريم",
+  "description": "مشاهدة يوتيوب جماعية مع أصدقائك في العراق",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#0ea5e9",
+  "icons": [
+    {
+      "src": "https://storage.googleapis.com/applet-assets/fbc229f5-8e03-4d21-a785-375f1238a529/input_file_0.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

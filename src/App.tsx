@@ -229,6 +229,30 @@ export default function App() {
     setRoomState(null);
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      await signInWithGoogle();
+      toast.success('تم تسجيل الدخول بجوجل بنجاح!');
+    } catch (error) {
+      console.error('Google Login Error:', error);
+      toast.error('حدث خطأ أثناء تسجيل الدخول بجوجل.');
+    }
+  };
+
+  const handleGuestLogin = async () => {
+    try {
+      await loginAsGuest();
+      toast.success('تم الدخول كزائر بنجاح!');
+    } catch (error: any) {
+      console.error('Guest Login Error:', error);
+      if (error.code === 'auth/operation-not-allowed') {
+        toast.error('عذراً، يجب تفعيل "تسجيل الدخول المجهول" (Anonymous Auth) من لوحة تحكم Firebase أولاً.');
+      } else {
+        toast.error('حدث خطأ أثناء الدخول كزائر. يرجى المحاولة لاحقاً.');
+      }
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)]">
@@ -278,14 +302,14 @@ export default function App() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <button
-              onClick={signInWithGoogle}
+              onClick={handleGoogleLogin}
               className="w-full sm:w-auto flex items-center justify-center gap-4 px-12 py-7 bg-white text-black font-black rounded-[2.5rem] hover:bg-zinc-200 transition-all transform hover:scale-105 active:scale-95 shadow-2xl shadow-black/20 text-2xl"
             >
               <LogIn size={28} />
               تسجيل الدخول بجوجل
             </button>
             <button
-              onClick={loginAsGuest}
+              onClick={handleGuestLogin}
               className="w-full sm:w-auto flex items-center justify-center gap-4 px-12 py-7 bg-[var(--input-bg)] text-[var(--text-primary)] font-black rounded-[2.5rem] border border-[var(--glass-border)] hover:bg-[var(--glass-border)] transition-all transform hover:scale-105 active:scale-95 text-2xl"
             >
               <UserCircle size={28} />
@@ -441,10 +465,10 @@ export default function App() {
         <Toaster position="top-center" theme={isDarkMode ? 'dark' : 'light'} />
         
         {/* Header */}
-        <header className="h-28 glass border-b border-[var(--glass-border)] px-12 flex items-center justify-between z-50">
-          <div className="flex items-center gap-10">
-            <div className="flex items-center gap-4 group cursor-pointer">
-              <div className="w-14 h-14 rounded-[1.5rem] overflow-hidden shadow-2xl shadow-brand-500/40 group-hover:scale-110 transition-transform border-2 border-brand-500/20 group-hover:border-brand-500/50">
+        <header className="h-20 md:h-28 glass border-b border-[var(--glass-border)] px-4 md:px-12 flex items-center justify-between z-50 sticky top-0">
+          <div className="flex items-center gap-4 md:gap-10">
+            <div className="flex items-center gap-3 md:gap-4 group cursor-pointer">
+              <div className="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-[1.5rem] overflow-hidden shadow-2xl shadow-brand-500/40 group-hover:scale-110 transition-transform border-2 border-brand-500/20 group-hover:border-brand-500/50">
                 <img 
                   src="https://storage.googleapis.com/applet-assets/fbc229f5-8e03-4d21-a785-375f1238a529/input_file_0.png" 
                   alt="سينك ستريم العراق" 
@@ -452,51 +476,51 @@ export default function App() {
                   referrerPolicy="no-referrer"
                 />
               </div>
-              <h1 className="text-4xl font-display font-black tracking-tighter text-[var(--text-primary)]">سينك ستريم العراق 🇮🇶</h1>
+              <h1 className="text-xl md:text-3xl font-display font-black tracking-tighter text-[var(--text-primary)] hidden sm:block">سينك ستريم العراق 🇮🇶</h1>
             </div>
-            <div className="h-10 w-[1px] bg-[var(--glass-border)] hidden md:block" />
-            <div className="hidden md:flex items-center gap-5 text-[var(--text-secondary)] bg-[var(--input-bg)] px-8 py-3 rounded-[1.5rem] border border-[var(--glass-border)]">
-              <Users size={22} className="text-brand-400" />
-              <span className="text-base font-bold">{participants.length} يشاهدون الآن</span>
+            <div className="h-8 md:h-10 w-[1px] bg-[var(--glass-border)] hidden lg:block" />
+            <div className="hidden lg:flex items-center gap-5 text-[var(--text-secondary)] bg-[var(--input-bg)] px-6 md:px-8 py-2 md:py-3 rounded-xl md:rounded-[1.5rem] border border-[var(--glass-border)]">
+              <Users size={20} className="text-brand-400" />
+              <span className="text-sm md:text-base font-bold">{participants.length} يشاهدون</span>
             </div>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2 md:gap-6">
             <button
               onClick={copyLink}
-              className="btn-secondary px-8 py-4 text-base"
+              className="btn-secondary px-4 md:px-8 py-2 md:py-4 text-sm md:text-base"
             >
-              <Share2 size={24} />
-              <span className="hidden sm:inline">مشاركة</span>
+              <Share2 size={20} md:size={24} />
+              <span className="hidden md:inline">مشاركة</span>
             </button>
 
             <button
               onClick={leaveRoom}
-              className="flex items-center gap-4 px-8 py-4 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 rounded-[1.5rem] text-red-400 transition-all text-base font-black"
+              className="flex items-center gap-2 md:gap-4 px-4 md:px-8 py-2 md:py-4 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 rounded-xl md:rounded-[1.5rem] text-red-400 transition-all text-sm md:text-base font-black"
             >
-              <X size={24} />
-              <span className="hidden sm:inline">إغلاق الغرفة</span>
+              <X size={20} md:size={24} />
+              <span className="hidden md:inline">إغلاق</span>
             </button>
             
             <button
               onClick={() => setIsDarkMode(!isDarkMode)}
-              className="p-4 bg-[var(--input-bg)] hover:bg-[var(--glass-border)] border border-[var(--glass-border)] rounded-[1.5rem] text-[var(--text-secondary)] transition-all hover:text-[var(--text-primary)]"
+              className="p-2 md:p-4 bg-[var(--input-bg)] hover:bg-[var(--glass-border)] border border-[var(--glass-border)] rounded-xl md:rounded-[1.5rem] text-[var(--text-secondary)] transition-all hover:text-[var(--text-primary)]"
             >
-              {isDarkMode ? <Sun size={26} /> : <Moon size={26} />}
+              {isDarkMode ? <Sun size={20} md:size={26} /> : <Moon size={20} md:size={26} />}
             </button>
 
             {roomState?.hostId === user.uid && (
               <button
                 onClick={() => setIsSettingsOpen(true)}
-                className="p-3.5 bg-[var(--input-bg)] hover:bg-[var(--glass-border)] border border-[var(--glass-border)] rounded-2xl text-[var(--text-secondary)] transition-all hover:text-[var(--text-primary)]"
+                className="p-2 md:p-3.5 bg-[var(--input-bg)] hover:bg-[var(--glass-border)] border border-[var(--glass-border)] rounded-xl md:rounded-2xl text-[var(--text-secondary)] transition-all hover:text-[var(--text-primary)]"
               >
-                <Settings size={22} />
+                <Settings size={20} md:size={22} />
               </button>
             )}
 
             <button
               onClick={toggleChat}
-              className={`p-3.5 rounded-2xl transition-all border ${isChatOpen ? 'bg-brand-500/20 border-brand-500/30 text-brand-400' : 'bg-[var(--input-bg)] border-[var(--glass-border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
+              className={`p-2 md:p-3.5 rounded-xl md:rounded-2xl transition-all border ${isChatOpen ? 'bg-brand-500/20 border-brand-500/30 text-brand-400' : 'bg-[var(--input-bg)] border-[var(--glass-border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
             >
               <MessageSquare size={22} />
             </button>
@@ -514,7 +538,7 @@ export default function App() {
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 flex overflow-hidden relative">
+        <main className="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
           {/* Reaction Overlay */}
           <div className="absolute inset-0 pointer-events-none z-40 overflow-hidden">
             <AnimatePresence>
@@ -533,7 +557,7 @@ export default function App() {
             </AnimatePresence>
           </div>
 
-          <div className="flex-1 p-10 flex flex-col gap-10 overflow-y-auto custom-scrollbar relative">
+          <div className="flex-1 p-4 md:p-10 flex flex-col gap-6 md:gap-10 overflow-y-auto custom-scrollbar relative">
             {/* Active Poll Overlay */}
             <AnimatePresence>
               {roomState?.activePoll && (
@@ -583,7 +607,7 @@ export default function App() {
               )}
             </AnimatePresence>
 
-            <div className="video-shadow rounded-[2.5rem] overflow-hidden border border-[var(--glass-border)]">
+            <div className="video-shadow rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-[var(--glass-border)]">
               <VideoPlayer 
                 roomId={roomId} 
                 isHost={roomState?.hostId === user.uid} 
@@ -591,21 +615,21 @@ export default function App() {
               />
             </div>
             
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-10">
-              <div className="xl:col-span-2 space-y-10">
-                <div className="glass-card p-10 space-y-8">
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 md:gap-10">
+              <div className="xl:col-span-2 space-y-6 md:space-y-10">
+                <div className="glass-card p-6 md:p-10 space-y-6 md:space-y-8">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-2xl font-display font-black text-[var(--text-primary)]">تفاصيل الجلسة</h3>
-                    <div className="px-4 py-1.5 bg-brand-500/10 text-brand-400 rounded-full text-xs font-black uppercase tracking-[0.2em] border border-brand-500/20">نشط 🇮🇶</div>
+                    <h3 className="text-xl md:text-2xl font-display font-black text-[var(--text-primary)]">تفاصيل الجلسة</h3>
+                    <div className="px-3 py-1 bg-brand-500/10 text-brand-400 rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest border border-brand-500/20">نشط 🇮🇶</div>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
                     <div className="space-y-2">
-                      <span className="text-xs text-[var(--text-secondary)] uppercase font-black tracking-widest">معرف الغرفة الفريد</span>
-                      <div className="text-[var(--text-primary)] font-mono text-xl bg-[var(--input-bg)] p-4 rounded-2xl border border-[var(--glass-border)]">{roomId}</div>
+                      <span className="text-[10px] md:text-xs text-[var(--text-secondary)] uppercase font-black tracking-widest">معرف الغرفة الفريد</span>
+                      <div className="text-[var(--text-primary)] font-mono text-base md:text-xl bg-[var(--input-bg)] p-3 md:p-4 rounded-xl md:rounded-2xl border border-[var(--glass-border)] truncate">{roomId}</div>
                     </div>
                     <div className="space-y-2">
-                      <span className="text-xs text-[var(--text-secondary)] uppercase font-black tracking-widest">المضيف المسؤول</span>
-                      <div className="text-brand-400 font-black text-xl bg-brand-500/5 p-4 rounded-2xl border border-brand-500/10">
+                      <span className="text-[10px] md:text-xs text-[var(--text-secondary)] uppercase font-black tracking-widest">المضيف المسؤول</span>
+                      <div className="text-brand-400 font-black text-base md:text-xl bg-brand-500/5 p-3 md:p-4 rounded-xl md:rounded-2xl border border-brand-500/10">
                         {participants.find(p => p.isHost)?.name || 'جاري التحميل...'}
                       </div>
                     </div>
@@ -613,20 +637,20 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="glass-card p-10 space-y-8">
+              <div className="glass-card p-6 md:p-10 space-y-6 md:space-y-8">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-2xl font-display font-black text-[var(--text-primary)]">المشاركون</h3>
+                  <h3 className="text-xl md:text-2xl font-display font-black text-[var(--text-primary)]">المشاركون</h3>
                   <span className="bg-[var(--input-bg)] text-[var(--text-secondary)] px-3 py-1 rounded-lg text-sm font-bold">{participants.length}</span>
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-3 md:space-y-4 max-h-[300px] overflow-y-auto custom-scrollbar pr-2">
                   {participants.map(p => (
-                    <div key={p.id} className="flex items-center justify-between p-4 bg-[var(--input-bg)] rounded-2xl border border-[var(--glass-border)] hover:bg-[var(--glass-border)] transition-all group">
-                      <div className="flex items-center gap-4">
-                        <div className={`w-3 h-3 rounded-full ${p.isOnline ? 'bg-green-500 shadow-[0_0_12px_rgba(34,197,94,0.6)]' : 'bg-zinc-600'}`} />
-                        <span className="text-lg font-bold text-[var(--text-primary)]">{p.name}</span>
+                    <div key={p.id} className="flex items-center justify-between p-3 md:p-4 bg-[var(--input-bg)] rounded-xl md:rounded-2xl border border-[var(--glass-border)] hover:bg-[var(--glass-border)] transition-all group">
+                      <div className="flex items-center gap-3 md:gap-4">
+                        <div className={`w-2.5 h-2.5 rounded-full ${p.isOnline ? 'bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]' : 'bg-zinc-600'}`} />
+                        <span className="text-base md:text-lg font-bold text-[var(--text-primary)]">{p.name}</span>
                       </div>
                       {p.isHost && (
-                        <span className="text-[10px] bg-brand-500/20 text-brand-400 px-3 py-1 rounded-lg font-black border border-brand-500/20 uppercase tracking-tighter">مضيف</span>
+                        <span className="text-[9px] md:text-[10px] bg-brand-500/20 text-brand-400 px-2 md:px-3 py-1 rounded-lg font-black border border-brand-500/20 uppercase tracking-tighter">مضيف</span>
                       )}
                     </div>
                   ))}
@@ -644,41 +668,43 @@ export default function App() {
                 exit={{ x: 500 }}
                 className="w-[450px] border-r border-[var(--glass-border)] bg-[var(--bg-primary)]/90 backdrop-blur-3xl hidden lg:block shadow-2xl"
               >
-                <Chat roomId={roomId} currentUser={{ id: user.uid, name: user.displayName || `زائر ${user.uid.slice(0, 4)}` }} />
+                <Chat 
+                  roomId={roomId} 
+                  currentUser={{ id: user.uid, name: user.displayName || 'مستخدم' }} 
+                />
               </motion.aside>
             )}
           </AnimatePresence>
-        </main>
 
-        {/* Settings Modal */}
-        <AnimatePresence>
-          {isSettingsOpen && (
-            <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setIsSettingsOpen(false)}
-                className="absolute inset-0 bg-black/90 backdrop-blur-md"
-              />
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: 40 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: 40 }}
-                className="glass-card p-16 max-w-3xl w-full relative z-10 space-y-12"
-              >
-                <div className="flex items-center justify-between">
-                  <h2 className="text-5xl font-display font-black text-[var(--text-primary)]">إعدادات الغرفة</h2>
-                  <button onClick={() => setIsSettingsOpen(false)} className="p-4 hover:bg-[var(--glass-border)] rounded-2xl transition-colors">
-                    <X size={32} />
-                  </button>
-                </div>
-                
-                <div className="space-y-10">
+          {/* Settings Modal */}
+          <AnimatePresence>
+            {isSettingsOpen && (
+              <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={() => setIsSettingsOpen(false)}
+                  className="absolute inset-0 bg-black/80 backdrop-blur-xl"
+                />
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9, y: 40 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9, y: 40 }}
+                  className="glass-card p-6 md:p-16 max-w-4xl w-full relative z-10 space-y-8 md:space-y-12 max-h-[90vh] overflow-y-auto custom-scrollbar"
+                >
+                  <div className="flex items-center justify-between sticky top-0 bg-[var(--card-bg)] backdrop-blur-3xl z-20 py-2">
+                    <h2 className="text-3xl md:text-5xl font-display font-black text-[var(--text-primary)]">إعدادات الغرفة</h2>
+                    <button onClick={() => setIsSettingsOpen(false)} className="p-2 md:p-4 hover:bg-[var(--glass-border)] rounded-xl md:rounded-2xl transition-colors">
+                      <X size={24} md:size={32} />
+                    </button>
+                  </div>
+                  
+                  <div className="space-y-8 md:space-y-10">
                   {/* Theme Selection */}
-                  <div className="space-y-6">
-                    <label className="text-xs font-black text-[var(--text-secondary)] uppercase tracking-[0.2em]">تخصيص المود (Theme)</label>
-                    <div className="grid grid-cols-3 gap-6">
+                  <div className="space-y-4 md:space-y-6">
+                    <label className="text-[10px] md:text-xs font-black text-[var(--text-secondary)] uppercase tracking-[0.2em]">تخصيص المود (Theme)</label>
+                    <div className="grid grid-cols-3 gap-3 md:gap-6">
                       {[
                         { id: 'minimal', name: 'كلاسيك', icon: '🎬' },
                         { id: 'cinema', name: 'سينما', icon: '🌑' },
@@ -686,13 +712,13 @@ export default function App() {
                       ].map((t) => (
                         <button
                           key={t.id}
-                          onClick={() => changeTheme(t.id as any)}
-                          className={`p-8 rounded-[2rem] border-2 transition-all flex flex-col items-center gap-4 ${
+                          onClick={() => setTheme(t.id as any)}
+                          className={`p-4 md:p-8 rounded-2xl md:rounded-[2rem] border-2 transition-all flex flex-col items-center gap-2 md:gap-4 ${
                             theme === t.id ? 'border-brand-500 bg-brand-500/10' : 'border-[var(--glass-border)] bg-[var(--input-bg)] hover:bg-[var(--glass-border)]'
                           }`}
                         >
-                          <span className="text-4xl">{t.icon}</span>
-                          <span className="font-black text-[var(--text-primary)] text-lg">{t.name}</span>
+                          <span className="text-2xl md:text-4xl">{t.icon}</span>
+                          <span className="font-black text-[var(--text-primary)] text-sm md:text-lg">{t.name}</span>
                         </button>
                       ))}
                     </div>
@@ -700,10 +726,23 @@ export default function App() {
 
                   {/* YouTube Search */}
                   <div className="space-y-6">
-                    <label className="text-xs text-[var(--text-secondary)] font-black uppercase tracking-[0.2em]">
-                      {searchQuery ? 'نتائج البحث' : 'فيديوهات مقترحة'}
-                    </label>
-                    <div className="flex gap-4">
+                    <div className="flex items-center justify-between">
+                      <label className="text-[10px] md:text-xs text-[var(--text-secondary)] font-black uppercase tracking-[0.2em]">
+                        {searchQuery ? 'نتائج البحث' : 'فيديوهات مقترحة'}
+                      </label>
+                      {searchQuery && (
+                        <button 
+                          onClick={() => {
+                            setSearchQuery('');
+                            setSearchResults([]);
+                          }}
+                          className="text-[10px] md:text-xs text-brand-400 font-black uppercase hover:underline"
+                        >
+                          مسح البحث
+                        </button>
+                      )}
+                    </div>
+                    <div className="flex flex-col md:flex-row gap-4">
                       <div className="relative flex-1">
                         <input
                           type="text"
@@ -711,16 +750,16 @@ export default function App() {
                           onChange={(e) => setSearchQuery(e.target.value)}
                           onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                           placeholder="ابحث عن مقطع، أغنية، أو فيلم..."
-                          className="glass-input w-full pr-16 text-[var(--text-primary)] text-lg h-20"
+                          className="glass-input w-full pr-14 md:pr-16 text-[var(--text-primary)] text-base md:text-lg h-16 md:h-20"
                         />
-                        <Search className="absolute right-6 top-1/2 -translate-y-1/2 text-[var(--text-secondary)]" size={28} />
+                        <Search className="absolute right-5 md:right-6 top-1/2 -translate-y-1/2 text-[var(--text-secondary)]" size={24} />
                       </div>
                       <button 
                         onClick={handleSearch}
                         disabled={isSearching}
-                        className="btn-primary px-10 h-20 rounded-2xl flex items-center justify-center min-w-[120px]"
+                        className="btn-primary px-8 md:px-10 h-16 md:h-20 rounded-xl md:rounded-2xl flex items-center justify-center min-w-[100px] md:min-w-[120px] text-lg"
                       >
-                        {isSearching ? <Loader2 className="animate-spin" size={28} /> : 'بحث'}
+                        {isSearching ? <Loader2 className="animate-spin" size={24} /> : 'بحث'}
                       </button>
                     </div>
 
@@ -731,18 +770,21 @@ export default function App() {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 20 }}
-                          className="grid grid-cols-1 gap-4 max-h-[400px] overflow-y-auto custom-scrollbar p-2"
+                          className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[400px] overflow-y-auto custom-scrollbar p-2"
                         >
                           {searchResults.map((result) => (
                             <button
                               key={result.id}
                               onClick={() => selectVideo(result.id)}
-                              className="flex items-center gap-6 p-4 bg-[var(--input-bg)] rounded-2xl border border-[var(--glass-border)] hover:border-brand-500 transition-all group text-right"
+                              className="flex flex-col p-3 bg-[var(--input-bg)] rounded-2xl border border-[var(--glass-border)] hover:border-brand-500 transition-all group text-right gap-3"
                             >
-                              <img src={result.thumbnail} alt={result.title} className="w-32 aspect-video object-cover rounded-xl shadow-lg" />
-                              <div className="flex-1 space-y-2">
-                                <h4 className="text-lg font-black text-[var(--text-primary)] line-clamp-2">{result.title}</h4>
-                                <p className="text-sm text-[var(--text-secondary)] font-bold">{result.channelTitle}</p>
+                              <div className="relative aspect-video w-full overflow-hidden rounded-xl shadow-lg">
+                                <img src={result.thumbnail} alt={result.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors" />
+                              </div>
+                              <div className="space-y-1 px-1">
+                                <h4 className="text-sm md:text-base font-black text-[var(--text-primary)] line-clamp-2 leading-tight">{result.title}</h4>
+                                <p className="text-[10px] md:text-xs text-[var(--text-secondary)] font-bold">{result.channelTitle}</p>
                               </div>
                             </button>
                           ))}
@@ -752,31 +794,31 @@ export default function App() {
                   </div>
 
                   <div className="space-y-4">
-                    <label className="text-xs text-[var(--text-secondary)] font-black uppercase tracking-[0.2em]">أو أدخل رابط الفيديو يدوياً</label>
+                    <label className="text-[10px] md:text-xs text-[var(--text-secondary)] font-black uppercase tracking-[0.2em]">أو أدخل رابط الفيديو يدوياً</label>
                     <div className="relative">
                       <input
                         type="text"
                         value={newVideoUrl}
                         onChange={(e) => setNewVideoUrl(e.target.value)}
                         placeholder="https://www.youtube.com/watch?v=..."
-                        className="glass-input w-full pr-16 text-[var(--text-primary)] text-lg h-20"
+                        className="glass-input w-full pr-14 md:pr-16 text-[var(--text-primary)] text-base md:text-lg h-16 md:h-20"
                       />
-                      <Search className="absolute right-6 top-1/2 -translate-y-1/2 text-[var(--text-secondary)]" size={28} />
+                      <Search className="absolute right-5 md:right-6 top-1/2 -translate-y-1/2 text-[var(--text-secondary)]" size={24} />
                     </div>
                   </div>
 
                   {/* Create Poll */}
                   <div className="space-y-6">
-                    <label className="text-xs font-black text-[var(--text-secondary)] uppercase tracking-[0.2em]">إنشاء استطلاع رأي</label>
-                    <div className="space-y-5">
+                    <label className="text-[10px] md:text-xs font-black text-[var(--text-secondary)] uppercase tracking-[0.2em]">إنشاء استطلاع رأي</label>
+                    <div className="space-y-4 md:space-y-5">
                       <input
                         type="text"
                         value={pollQuestion}
                         onChange={(e) => setPollQuestion(e.target.value)}
                         placeholder="ما هو سؤالك؟"
-                        className="w-full glass-input text-[var(--text-primary)] h-20 text-lg"
+                        className="w-full glass-input text-[var(--text-primary)] h-16 md:h-20 text-base md:text-lg"
                       />
-                      <div className="grid grid-cols-2 gap-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                         {pollOptions.map((opt, idx) => (
                           <input
                             key={idx}
@@ -788,17 +830,17 @@ export default function App() {
                               setPollOptions(newOpts);
                             }}
                             placeholder={`خيار ${idx + 1}`}
-                            className="glass-input text-[var(--text-primary)] h-16"
+                            className="glass-input text-[var(--text-primary)] h-14 md:h-16"
                           />
                         ))}
                       </div>
-                      <button onClick={createPoll} className="w-full btn-secondary py-6 text-xl">بدء الاستطلاع</button>
+                      <button onClick={createPoll} className="w-full btn-secondary py-5 md:py-6 text-lg md:text-xl">بدء الاستطلاع</button>
                     </div>
                   </div>
 
                   <button
                     onClick={changeVideo}
-                    className="btn-primary w-full text-2xl py-7 rounded-[2rem]"
+                    className="btn-primary w-full text-xl md:text-2xl py-6 md:py-7 rounded-2xl md:rounded-[2rem]"
                   >
                     تحديث الفيديو للجميع
                   </button>
@@ -807,7 +849,6 @@ export default function App() {
             </div>
           )}
         </AnimatePresence>
-
         {/* Active Poll Overlay */}
         <AnimatePresence>
           {roomState?.activePoll && (
@@ -858,6 +899,7 @@ export default function App() {
             </motion.div>
           )}
         </AnimatePresence>
+        </main>
       </div>
     </ErrorBoundary>
   );
