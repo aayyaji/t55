@@ -1,20 +1,42 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# سينك ستريم العراق 🇮🇶 (SyncStream Iraq)
 
-# Run and deploy your AI Studio app
+أول منصة عراقية احترافية لمشاهدة فيديوهات اليوتيوب بشكل جماعي مع مزامنة حقيقية، دردشة مباشرة، وتفاعلات حية.
 
-This contains everything you need to run your app locally.
+## 🚀 المميزات (Features)
 
-View your app in AI Studio: https://ai.studio/apps/fbc229f5-8e03-4d21-a785-375f1238a529
+- **مزامنة حقيقية:** شاهد الفيديوهات مع أصدقائك في نفس اللحظة بدون تأخير.
+- **دردشة مباشرة:** تواصل مع أصدقائك أثناء المشاهدة مع دعم الرموز التعبيرية (Emojis).
+- **الوضع الليلي (Dark Mode):** واجهة مريحة للعين تدعم التبديل بين الوضع المظلم والفاتح.
+- **هوية عراقية:** تصميم مخصص يعكس الثقافة العراقية مع دعم كامل للغة العربية.
+- **استطلاعات رأي مباشرة (Live Polls):** شارك أصدقائك في اتخاذ القرارات أثناء المشاهدة.
+- **تفاعلات حية:** أرسل تفاعلات تظهر للجميع على الشاشة.
 
-## Run Locally
+## 🛠 التقنيات المستخدمة (Tech Stack)
 
-**Prerequisites:**  Node.js
+- **Frontend:** React, Vite, TypeScript, Tailwind CSS.
+- **Backend & Real-time:** Firebase (Firestore, Authentication).
+- **Animations:** Framer Motion.
+- **Icons:** Lucide React.
 
+## 👤 صنع بواسطة (Credits)
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+تم تطوير هذا المشروع بواسطة **_50j0**.
+يمكنك التواصل معي عبر انستقرام: [https://www.instagram.com/_50j0/](https://www.instagram.com/_50j0/)
+
+---
+
+## ⚙️ التشغيل المحلي (Local Setup)
+
+1. قم بتحميل المشروع (Clone).
+2. قم بتثبيت المكتبات:
+   ```bash
+   npm install
+   ```
+3. قم بتشغيل المشروع:
+   ```bash
+   npm run dev
+   ```
+
+## 📄 الترخيص (License)
+
+هذا المشروع متاح للاستخدام الشخصي والتطوير.

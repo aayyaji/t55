@@ -3,6 +3,13 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, signInAnonymously } from 
 import { getFirestore, doc, getDocFromServer } from 'firebase/firestore';
 import firebaseConfig from '../../firebase-applet-config.json';
 
+if (!firebaseConfig || !firebaseConfig.apiKey || firebaseConfig.apiKey.includes('TODO')) {
+  console.error("CRITICAL: Firebase configuration is missing or contains placeholder values!");
+}
+
+// @ts-ignore
+window.FIREBASE_CONFIG_LOADED = !!firebaseConfig;
+
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
