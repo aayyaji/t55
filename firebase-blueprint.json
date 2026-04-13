@@ -1,0 +1,74 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User presence and profile information within a room",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "isHost": { "type": "boolean" },
+        "isOnline": { "type": "boolean" },
+        "lastSeen": { "type": "number" }
+      },
+      "required": ["id", "name", "isHost", "isOnline", "lastSeen"]
+    },
+    "RoomState": {
+      "title": "RoomState",
+      "description": "The synchronized state of the video player in a room",
+      "type": "object",
+      "properties": {
+        "videoId": { "type": "string" },
+        "isPlaying": { "type": "boolean" },
+        "currentTime": { "type": "number" },
+        "lastUpdated": { "type": "number" },
+        "hostId": { "type": "string" }
+      },
+      "required": ["videoId", "isPlaying", "currentTime", "lastUpdated", "hostId"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Chat message sent in a room",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "text": { "type": "string" },
+        "timestamp": { "type": "number" }
+      },
+      "required": ["id", "userId", "userName", "text", "timestamp"]
+    },
+    "Reaction": {
+      "title": "Reaction",
+      "description": "Floating reaction emoji",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "emoji": { "type": "string" },
+        "userId": { "type": "string" },
+        "timestamp": { "type": "number" }
+      },
+      "required": ["id", "emoji", "userId", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/rooms/{roomId}": {
+      "schema": "RoomState",
+      "description": "Main room synchronization data"
+    },
+    "/rooms/{roomId}/users/{userId}": {
+      "schema": "User",
+      "description": "Users currently in the room"
+    },
+    "/rooms/{roomId}/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Chat messages for the room"
+    },
+    "/rooms/{roomId}/reactions/{reactionId}": {
+      "schema": "Reaction",
+      "description": "Live reactions for the room"
+    }
+  }
+}
